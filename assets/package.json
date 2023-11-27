@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "paleta": "file:../deps/paleta"
+  }
+}
