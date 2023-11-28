@@ -22,13 +22,22 @@ defmodule Avance.Core.RemindersTest do
     end
 
     test "update reminder", %{reminder: reminder} do
-      attrs = %{name: "Updated Vendor"}
-      assert {:ok, %Reminder{name: "Updated Vendor"}} = Reminders.update(reminder, attrs)
+      update_attrs = %{
+        description: "some updated description",
+        reminder_type: "some updated reminder_type",
+        settings: %{},
+        schedule: "some updated schedule"
+      }
+
+      assert {:ok, %Reminder{} = reminder} = Reminders.update(reminder, update_attrs)
+      assert reminder.description == "some updated description"
+      assert reminder.reminder_type == "some updated reminder_type"
+      assert reminder.settings == %{}
+      assert reminder.schedule == "some updated schedule"
     end
 
     test "change/1", %{reminder: reminder} do
-      assert %Ecto.Changeset{changes: %{name: "New name"}} =
-               Reminders.change(reminder, %{name: "New name"})
+      assert %Ecto.Changeset{} = Reminders.change(reminder)
     end
 
     test "delete reminder", %{reminder: %{id: reminder_id} = reminder} do

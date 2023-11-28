@@ -9,21 +9,15 @@ defmodule Avance.Tests.Fixtures.ReminderFixtures do
   @doc """
   Generate a reminder.
   """
-  def reminder_fixture(project, attrs \\ %{}) do
-    attrs = default_attrs(project) |> Map.merge(attrs)
+  def reminder_fixture(attrs \\ %{}) do
+    attrs = default_attrs() |> Map.merge(attrs)
 
     %Reminder{}
     |> Reminder.changeset(attrs)
     |> Repo.insert!()
   end
 
-  def default_attrs(%{id: id}) do
-    %{
-      project_id: id,
-      description: "some description",
-      reminder_type: :slack,
-      settings: %{},
-      schedule: "0 9 * * 1-5"
-    }
+  def default_attrs do
+    %{description: "some description", reminder_type: "some reminder_type", settings: %{}, schedule: "some schedule"}
   end
 end

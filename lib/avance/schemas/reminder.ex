@@ -2,17 +2,14 @@ defmodule Avance.Schemas.Reminder do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @reminder_types [:slack]
-
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
+  @derive {Phoenix.Param, key: :id}
   schema "reminders" do
     field :description, :string
-    field :reminder_type, Ecto.Enum, values: @reminder_types
+    field :reminder_type, :string
     field :settings, :map
     field :schedule, :string
-
-    belongs_to :project, Avance.Schemas.Project
 
     timestamps(type: :utc_datetime)
   end

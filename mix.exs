@@ -118,8 +118,38 @@ defmodule Avance.MixProject do
       {:open_api_spex, "~> 3.16"},
 
       # Jobs
-      {:oban, "~> 2.15"},
-      {:paleta, "~> 0.1.0"},
+      {:oban, "~> 2.15"}
+    ] ++
+      private_deps()
+  end
+
+  def private_deps() do
+    [
+      {"../paleta", :paleta_dep},
+      {"../flowy", :flowy_dep}
+    ]
+    |> Enum.map(fn {path, fun} ->
+      apply(__MODULE__, fun, [File.exists?(path)])
+    end)
+    |> List.flatten()
+  end
+
+  def paleta_dep(true = _local) do
+    [{:paleta, path: "../paleta", override: true}]
+  end
+
+  def paleta_dep(false) do
+    [
+      {:paleta, git: "https://github.com//flowy-framework/paleta", tag: "0.1.0"}
+    ]
+  end
+
+  def flowy_dep(true = _local) do
+    [{:flowy, path: "../flowy"}]
+  end
+
+  def flowy_dep(false) do
+    [
       {:flowy, git: "https://github.com/flowy-framework/flowy", tag: "0.1.1"}
     ]
   end
