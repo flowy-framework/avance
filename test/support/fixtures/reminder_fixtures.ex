@@ -18,6 +18,14 @@ defmodule Avance.Tests.Fixtures.ReminderFixtures do
   end
 
   def default_attrs do
-    %{description: "some description", reminder_type: "some reminder_type", settings: %{}, schedule: "some schedule"}
+    %{
+      description: "some description",
+      reminder_type: :test,
+      settings: %{},
+      timezone: "Europe/Madrid",
+      last_run_at: nil,
+      enabled: true,
+      schedule: "*/2 * * * *"
+    }
   end
 end

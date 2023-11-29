@@ -4,12 +4,15 @@ defmodule Avance.Repo.Migrations.CreateReminders do
   def change do
     create table(:reminders, primary_key: false) do
       add :id, :binary_id, primary_key: true
-      add :description, :text
-      add :reminder_type, :text
-      add :settings, :map
-      add :schedule, :text
+      add :description, :text, null: false
+      add :reminder_type, :text, null: false
+      add :settings, :map, null: false, default: %{}
+      add :schedule, :text, null: false
+      add :timezone, :text, null: false
+      add :last_run_at, :utc_datetime, null: false
+      add :enabled, :boolean, null: false, default: true
 
-      add(:project_id, references(:projects, type: :binary_id))
+      add(:project_id, references(:projects, type: :binary_id), null: false)
 
       timestamps(type: :utc_datetime)
     end

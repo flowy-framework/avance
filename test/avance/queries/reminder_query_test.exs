@@ -24,13 +24,18 @@ defmodule Avance.Queries.ReminderQueryTest do
     end
 
     test "update reminder", %{reminder: reminder} do
-      update_attrs = %{description: "some updated description", reminder_type: "some updated reminder_type", settings: %{}, schedule: "some updated schedule"}
+      update_attrs = %{
+        description: "some updated description",
+        reminder_type: :test,
+        settings: %{},
+        schedule: "0 * * * *"
+      }
 
       assert {:ok, %Reminder{} = reminder} = ReminderQuery.update(reminder, update_attrs)
       assert reminder.description == "some updated description"
-      assert reminder.reminder_type == "some updated reminder_type"
+      assert reminder.reminder_type == :test
       assert reminder.settings == %{}
-      assert reminder.schedule == "some updated schedule"
+      assert reminder.schedule == "0 * * * *"
     end
 
     test "delete reminder", %{reminder: %{id: reminder_id} = reminder} do
@@ -46,17 +51,38 @@ defmodule Avance.Queries.ReminderQueryTest do
     test "changeset/1 returns a reminder changeset", %{reminder: reminder} do
       assert %Ecto.Changeset{} = ReminderQuery.changeset(reminder)
     end
+
+    @tag :reminder_query_search
+    test "search/1 returns no reminders when filter doesn't match" do
+      assert ReminderQuery.search(%{enabled: false}) == []
+    end
+
+    @tag :reminder_query_search
+    test "search/1 returns reminders by filter", %{reminder: %{id: reminder_id}} do
+      assert [%{id: ^reminder_id}] = ReminderQuery.search(%{enabled: true})
+    end
   end
 
-  @tag :reminder_query
-  test "create reminder" do
-    valid_attrs = %{description: "some description", reminder_type: "some reminder_type", settings: %{}, schedule: "some schedule"}
+  describe "create reminders" do
+    setup [:setup_project]
 
-    assert {:ok, %Reminder{} = reminder} = ReminderQuery.create(valid_attrs)
-    assert reminder.description == "some description"
-    assert reminder.reminder_type == "some reminder_type"
-    assert reminder.settings == %{}
-    assert reminder.schedule == "some schedule"
+    @tag :reminder_query
+    test "create reminder", %{project: project} do
+      valid_attrs = %{
+        description: "some description",
+        reminder_type: :test,
+        settings: %{},
+        timezone: "Europe/Madrid",
+        schedule: "* * * * *",
+        project_id: project.id
+      }
+
+      assert {:ok, %Reminder{} = reminder} = ReminderQuery.create(valid_attrs)
+      assert reminder.description == "some description"
+      assert reminder.reminder_type == :test
+      assert reminder.settings == %{}
+      assert reminder.schedule == "* * * * *"
+    end
   end
 
   test "create/1 with invalid data returns error changeset" do

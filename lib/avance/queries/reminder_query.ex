@@ -18,6 +18,36 @@ defmodule Avance.Queries.ReminderQuery do
     |> Repo.all()
   end
 
+  def search(params \\ %{}) do
+    base()
+    |> where(^filter_where(params))
+    |> limit(^filter_limit(params))
+    |> order_by(^filter_order_by(params))
+    |> Repo.all()
+  end
+
+  defp filter_order_by(%{order_by: :updated_at_desc}),
+    do: [desc: dynamic([t], t.updated_at)]
+
+  defp filter_order_by(%{order_by: :updated_at_asc}),
+    do: [asc: dynamic([t], t.updated_at)]
+
+  defp filter_order_by(_), do: []
+
+  defp filter_limit(%{limit: limit}), do: limit
+  defp filter_limit(_), do: 100
+
+  def filter_where(params) do
+    Enum.reduce(params, dynamic(true), fn
+      {:enabled, value}, dynamic ->
+        dynamic([reminder: r], ^dynamic and r.enabled == ^value)
+
+      {_, _}, dynamic ->
+        # Not a where parameter
+        dynamic
+    end)
+  end
+
   @doc """
   Returns the last inserted reminders.
 

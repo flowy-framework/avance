@@ -118,7 +118,10 @@ defmodule Avance.MixProject do
       {:open_api_spex, "~> 3.16"},
 
       # Jobs
-      {:oban, "~> 2.15"}
+      {:oban, "~> 2.15"},
+      {:crontab, "~> 1.1"},
+      {:tzdata, "~> 1.1"},
+      {:timex, "~> 3.0"}
     ] ++
       private_deps()
   end
@@ -170,6 +173,7 @@ defmodule Avance.MixProject do
         "assets.build"
       ],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.db.seed": ["run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.reset.db": ["ecto.drop", "ecto.create", "ecto.migrate"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
