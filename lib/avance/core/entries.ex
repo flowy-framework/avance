@@ -1,4 +1,8 @@
 defmodule Avance.Core.Entries do
+  @moduledoc """
+  This module contains the business logic for <%= schema.human_plural %>.
+  """
+
   alias Avance.Queries.EntryQuery
 
   defdelegate all, to: EntryQuery

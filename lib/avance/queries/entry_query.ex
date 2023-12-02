@@ -1,4 +1,7 @@
 defmodule Avance.Queries.EntryQuery do
+  @moduledoc """
+  This module contains the queries for entries.
+  """
   import Ecto.Query
 
   alias Avance.Schemas.Entry

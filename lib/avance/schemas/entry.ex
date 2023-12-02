@@ -1,6 +1,17 @@
 defmodule Avance.Schemas.Entry do
+  @moduledoc """
+  This schema represents an entry.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
+
+  @type t :: %__MODULE__{
+          id: binary(),
+          description: String.t(),
+          inserted_at: DateTime.t(),
+          updated_at: DateTime.t()
+        }
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -25,6 +36,7 @@ defmodule Avance.Schemas.Entry do
   end
 
   @doc false
+  @spec changeset(Entry.t(), map()) :: Ecto.Changeset.t()
   def changeset(entry, attrs) do
     entry
     |> cast(attrs, @required_fields ++ @optional_fields)

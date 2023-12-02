@@ -8,6 +8,7 @@ defmodule Avance.MixProject do
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
+      test_coverage: [tool: ExCoveralls],
       aliases: aliases(),
       deps: deps(),
 
@@ -103,6 +104,7 @@ defmodule Avance.MixProject do
       # Security check
       {:sobelow, "~> 0.13", only: [:dev, :test], runtime: true},
       {:mix_audit, "~> 2.0", only: [:dev, :test], runtime: false},
+      {:doctor, "~> 0.21.0", only: [:dev, :test]},
 
       # Test coverage
       {:excoveralls, "~> 0.18", only: :test},
@@ -143,7 +145,7 @@ defmodule Avance.MixProject do
 
   def paleta_dep(false) do
     [
-      {:paleta, git: "https://github.com//flowy-framework/paleta", tag: "0.1.0"}
+      {:paleta, "~> 0.1.0"}
     ]
   end
 

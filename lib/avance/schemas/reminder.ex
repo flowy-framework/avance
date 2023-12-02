@@ -1,4 +1,8 @@
 defmodule Avance.Schemas.Reminder do
+  @moduledoc """
+  This schema represents a reminder.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -1,4 +1,5 @@
 defmodule AvanceWeb.Router do
+  @moduledoc false
   use AvanceWeb, :router
 
   pipeline :browser do

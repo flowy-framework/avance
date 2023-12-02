@@ -1,4 +1,7 @@
 defmodule Avance.Core.Reminders do
+  @moduledoc """
+  This module contains the business logic for reminders.
+  """
   use Timex
   alias Avance.Support.CronConverter
   alias Avance.Schemas.Reminder
@@ -40,10 +43,16 @@ defmodule Avance.Core.Reminders do
     reminder
   end
 
+  @doc """
+  Schedule a reminder
+  """
   def schedule(%Reminder{enabled: false}) do
     {:error, :reminder_disabled}
   end
 
+  @doc """
+  Update last run at for a reminder
+  """
   def update_last_run_at!(%Reminder{} = reminder, last_run_at \\ DateTime.utc_now()) do
     update!(reminder, %{last_run_at: last_run_at})
   end
@@ -63,6 +72,9 @@ defmodule Avance.Core.Reminders do
     {:error, :reminder_disabled}
   end
 
+  @doc """
+  Calculate the next run for a reminder
+  """
   def run_at(%Reminder{last_run_at: last_run_at, timezone: timezone}, :datetime) do
     last_run_at = last_run_at || Timex.now()
     timezone = Timezone.get(timezone, last_run_at)
@@ -75,6 +87,9 @@ defmodule Avance.Core.Reminders do
     |> Timex.to_naive_datetime()
   end
 
+  @doc """
+  Calculate the next run for a reminder
+  """
   def next_run(reminder) do
     naive_last_run_at = run_at(reminder, :naive)
 

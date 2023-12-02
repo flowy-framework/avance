@@ -1,4 +1,7 @@
 defmodule Avance.Core.Servers.ReminderServer do
+  @moduledoc """
+  This module is responsible for scheduling reminders.
+  """
   use GenServer
 
   alias Avance.Core.Reminders

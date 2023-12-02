@@ -1,4 +1,8 @@
 defmodule Avance.Workers.ReminderWorker do
+  @moduledoc """
+  This worker is responsible for sending reminders
+  """
+
   use Oban.Worker,
     queue: :reminders,
     # We don't want this to be retried in case of a failure

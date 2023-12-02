@@ -1,4 +1,5 @@
 defmodule Avance.Test.Setups do
+  @moduledoc false
   alias Avance.Tests.Fixtures.{ProjectFixtures, ReminderFixtures, EntryFixtures}
 
   def setup_entry(%{project: project} = context) do

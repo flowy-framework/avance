@@ -1,6 +1,18 @@
 defmodule Avance.Schemas.Project do
+  @moduledoc """
+  This schema represents a project.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
+
+  @type t :: %__MODULE__{
+          id: binary(),
+          name: String.t(),
+          description: String.t(),
+          inserted_at: DateTime.t(),
+          updated_at: DateTime.t()
+        }
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id

@@ -1,4 +1,8 @@
 defmodule Avance.Support.SlackClient do
+  @moduledoc """
+  This module provides a simple interface for posting messages to Slack.
+  """
+
   alias Flowy.Support.Http
   alias Avance.Config
 
