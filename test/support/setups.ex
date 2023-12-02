@@ -1,6 +1,20 @@
 defmodule Avance.Test.Setups do
   @moduledoc false
-  alias Avance.Tests.Fixtures.{ProjectFixtures, ReminderFixtures, EntryFixtures, DigestFixtures}
+  alias Avance.Tests.Fixtures.{
+    ProjectFixtures,
+    ReminderFixtures,
+    EntryFixtures,
+    DigestFixtures,
+    DigestProjectFixtures
+  }
+
+  def setup_digest_project(%{project: %{id: project_id}, digest: %{id: digest_id}} = context) do
+    digest_project =
+      DigestProjectFixtures.digest_project_fixture(%{project_id: project_id, digest_id: digest_id})
+
+    context
+    |> add_to_context(%{digest_project: digest_project})
+  end
 
   def setup_digest(context) do
     digest = DigestFixtures.digest_fixture()

@@ -1,7 +1,7 @@
 defmodule Avance.Core.DigestsTest do
   use Avance.DataCase
 
-  alias Avance.Schemas.Digest
+  alias Avance.Schemas.{Digest, DigestProject}
   alias Avance.Core.Digests
   import Avance.Test.Setups
 
@@ -53,5 +53,18 @@ defmodule Avance.Core.DigestsTest do
 
     assert {:ok, %Digest{} = digest} = Digests.create(valid_attrs)
     assert digest.description == "some description"
+  end
+
+  describe "add project to digest" do
+    setup [:setup_project, :setup_digest]
+
+    test "add project to digest", %{
+      project: %{id: project_id} = project,
+      digest: %{id: digest_id} = digest
+    } do
+      assert {:ok, %DigestProject{} = digest_project} = Digests.add_project(digest, project)
+      assert digest_project.project_id == project_id
+      assert digest_project.digest_id == digest_id
+    end
   end
 end

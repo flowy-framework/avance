@@ -1,4 +1,7 @@
 defmodule Avance.Schemas.Digest do
+  @moduledoc """
+  This module contains the schema for the Digest model.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
