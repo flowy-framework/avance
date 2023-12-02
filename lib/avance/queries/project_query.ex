@@ -1,4 +1,7 @@
 defmodule Avance.Queries.ProjectQuery do
+  @moduledoc """
+  This module contains the queries for projects.
+  """
   import Ecto.Query
 
   alias Avance.Schemas.Project

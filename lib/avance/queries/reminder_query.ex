@@ -1,4 +1,7 @@
 defmodule Avance.Queries.ReminderQuery do
+  @moduledoc """
+  This module contains the queries for reminders.
+  """
   import Ecto.Query
 
   alias Avance.Schemas.Reminder

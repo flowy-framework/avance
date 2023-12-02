@@ -1,4 +1,7 @@
 defmodule Avance.Core.Projects do
+  @moduledoc """
+  This module contains the business logic for projects.
+  """
   alias Avance.Queries.ProjectQuery
 
   defdelegate all, to: ProjectQuery

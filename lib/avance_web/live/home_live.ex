@@ -1,4 +1,5 @@
 defmodule AvanceWeb.Live.HomeLive do
+  @moduledoc false
   use AvanceWeb, :live_view
 
   @impl true

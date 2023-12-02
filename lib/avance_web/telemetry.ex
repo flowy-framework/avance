@@ -1,4 +1,5 @@
 defmodule AvanceWeb.Telemetry do
+  @moduledoc false
   use Supervisor
   import Telemetry.Metrics
 
@@ -7,6 +8,7 @@ defmodule AvanceWeb.Telemetry do
   end
 
   @impl true
+  @doc false
   def init(_arg) do
     children = [
       # Telemetry poller will execute the given period measurements
@@ -19,6 +21,8 @@ defmodule AvanceWeb.Telemetry do
     Supervisor.init(children, strategy: :one_for_one)
   end
 
+  @spec metrics() :: [Telemetry.Metrics.Measurement.t()]
+  @doc false
   def metrics do
     [
       # Phoenix Metrics
