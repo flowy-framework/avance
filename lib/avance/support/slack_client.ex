@@ -3,7 +3,7 @@ defmodule Avance.Support.SlackClient do
   alias Avance.Config
 
   @username "avance"
-  @icon_url "https://github.com/flowy-framework/avance/blob/b1b3bff9abfa0d63af8fa458f5b23d8a5a4c9686/logos/logo-bot.png?raw=true"
+  @icon_url "https://raw.githubusercontent.com/flowy-framework/avance/main/logos/logo-bot.png"
 
   @doc """
   Posts a message to a Slack channel.

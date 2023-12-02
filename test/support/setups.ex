@@ -1,5 +1,22 @@
 defmodule Avance.Test.Setups do
-  alias Avance.Tests.Fixtures.{ProjectFixtures, ReminderFixtures}
+  alias Avance.Tests.Fixtures.{ProjectFixtures, ReminderFixtures, EntryFixtures}
+
+  def setup_entry(%{project: project} = context) do
+    %{id: project_id} = project
+
+    entry =
+      %{project_id: project_id}
+      |> EntryFixtures.entry_fixture()
+
+    context
+    |> add_to_context(%{entry: entry})
+  end
+
+  def setup_entry(context) do
+    context
+    |> setup_project()
+    |> setup_entry()
+  end
 
   def setup_reminder(%{project: project} = context) do
     %{id: project_id} = project

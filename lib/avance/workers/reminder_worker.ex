@@ -15,8 +15,8 @@ defmodule Avance.Workers.ReminderWorker do
   alias Avance.Core.Reminders
 
   @impl true
-  def perform(%{args: %{"id" => reminder_id} = args, scheduled_at: scheduled_at}) do
-    %{enabled: enabled, last_run_at: last_run_at, schedule: schedule} =
+  def perform(%{args: %{"id" => reminder_id}, scheduled_at: scheduled_at}) do
+    %{enabled: enabled} =
       reminder = Reminders.get!(reminder_id)
 
     case enabled do

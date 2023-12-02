@@ -125,10 +125,10 @@ defmodule Avance.Core.RemindersTest do
       assert_enqueued worker: ReminderWorker, args: %{id: first_reminder.id}
       assert %{success: 1, failure: 0} = Oban.drain_queue(queue: :reminders, with_scheduled: true)
 
-      %{last_run_at: last_run_at} = reminder = Reminders.get!(first_reminder.id)
+      %{last_run_at: last_run_at} = Reminders.get!(first_reminder.id)
       assert(last_run_at != nil)
-      # assert({:ok, %{conflict?: true}} = perform_job(ReminderWorker, %{id: first_reminder.id}))
-      # assert_enqueued worker: ReminderWorker, args: %{id: first_reminder.id}
+      assert(:ok = perform_job(ReminderWorker, %{id: first_reminder.id}))
+      assert_enqueued worker: ReminderWorker, args: %{id: first_reminder.id}
     end
   end
 
