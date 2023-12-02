@@ -119,7 +119,40 @@ defmodule Avance.MixProject do
 
       # Jobs
       {:oban, "~> 2.15"},
-      {:paleta, "~> 0.1.0"},
+      {:crontab, "~> 1.1"},
+      {:tzdata, "~> 1.1"},
+      {:timex, "~> 3.0"}
+    ] ++
+      private_deps()
+  end
+
+  def private_deps() do
+    [
+      {"../paleta", :paleta_dep},
+      {"../flowy", :flowy_dep}
+    ]
+    |> Enum.map(fn {path, fun} ->
+      apply(__MODULE__, fun, [File.exists?(path)])
+    end)
+    |> List.flatten()
+  end
+
+  def paleta_dep(true = _local) do
+    [{:paleta, path: "../paleta", override: true}]
+  end
+
+  def paleta_dep(false) do
+    [
+      {:paleta, git: "https://github.com//flowy-framework/paleta", tag: "0.1.0"}
+    ]
+  end
+
+  def flowy_dep(true = _local) do
+    [{:flowy, path: "../flowy"}]
+  end
+
+  def flowy_dep(false) do
+    [
       {:flowy, git: "https://github.com/flowy-framework/flowy", tag: "0.1.1"}
     ]
   end
@@ -140,6 +173,7 @@ defmodule Avance.MixProject do
         "assets.build"
       ],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.db.seed": ["run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.reset.db": ["ecto.drop", "ecto.create", "ecto.migrate"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],

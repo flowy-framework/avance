@@ -1,14 +1,22 @@
 projects:
   - name: avance
     description: "Avance is a project management tool for agile teams."
+    stamps:
+      - name: My docs
+      - stamp_type: github 
+      - settings:
+          repository: https://github.com/flowy-framework/flowy 
+          path: /docs/updates.md
     reminders:
-      - name: slack
-        channel: "#avance"
-        description: "Remind me to update my status"
+      - description: "Remind me to update my status"
+        reminder_type: "slack"
+        settings:
+          - channel: "#avance"
         schedule: "0 9 * * 1-5"
-      - name: slack
-        channel: "#avance"
-        description: "Remind me to update my status"
+      - description: "Remind me to update my status"
+        reminder_type: "slack"
+        settings:
+          - channel: "#avance"
         schedule: "0 9 * * 1-5"
     notifications:
       - name: slack

@@ -85,7 +85,7 @@ defmodule AvanceWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      
+
       import AvanceWeb.Gettext
 
       use Paleta

@@ -20,7 +20,7 @@
   </a>
 </p>
 
-<!-- MDOC !-->
+<!-- MDOC -->
 
 ## Introduction
 

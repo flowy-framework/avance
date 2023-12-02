@@ -5,9 +5,18 @@ defmodule Avance.Application do
 
   use Application
 
+  @env Mix.env()
+
   @impl true
   def start(_type, _args) do
-    children = [
+    # See https://hexdocs.pm/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: Avance.Supervisor]
+    Supervisor.start_link(children(@env), opts)
+  end
+
+  defp children(:test) do
+    [
       Flowy.Prometheus,
       AvanceWeb.Telemetry,
       Avance.Repo,
@@ -21,11 +30,24 @@ defmodule Avance.Application do
       # Start to serve requests, typically the last entry
       AvanceWeb.Endpoint
     ]
+  end
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Avance.Supervisor]
-    Supervisor.start_link(children, opts)
+  defp children(_) do
+    [
+      Flowy.Prometheus,
+      AvanceWeb.Telemetry,
+      Avance.Repo,
+      {DNSCluster, query: Application.get_env(:avance, :dns_cluster_query) || :ignore},
+      {Phoenix.PubSub, name: Avance.PubSub},
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: Avance.Finch},
+      {Oban, Application.fetch_env!(:avance, Oban)},
+      # Start a worker by calling: Avance.Worker.start_link(arg)
+      # {Avance.Worker, arg},
+      # Start to serve requests, typically the last entry
+      AvanceWeb.Endpoint,
+      {Avance.Core.Servers.ReminderServer, []}
+    ]
   end
 
   # Tell Phoenix to update the endpoint configuration

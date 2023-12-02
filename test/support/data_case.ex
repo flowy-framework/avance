@@ -18,6 +18,7 @@ defmodule Avance.DataCase do
 
   using do
     quote do
+      use Oban.Testing, repo: Avance.Repo
       alias Avance.Repo
 
       import Ecto

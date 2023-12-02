@@ -64,11 +64,13 @@ config :phoenix, :json_library, Jason
 config :avance, Oban,
   repo: Avance.Repo,
   plugins: [Oban.Plugins.Pruner],
-  queues: [default: 10]
+  queues: [default: 10, reminders: 10]
 
 config :flowy, :oauth,
   site: "",
   clients: []
+
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
