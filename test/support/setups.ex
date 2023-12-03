@@ -5,8 +5,22 @@ defmodule Avance.Test.Setups do
     ReminderFixtures,
     EntryFixtures,
     DigestFixtures,
-    DigestProjectFixtures
+    DigestProjectFixtures,
+    NewsieFixtures
   }
+
+  def setup_newsie(%{digest: %{id: digest_id}} = context) do
+    newsie = NewsieFixtures.newsie_fixture(%{digest_id: digest_id})
+
+    context
+    |> add_to_context(%{newsie: newsie})
+  end
+
+  def setup_newsie(context) do
+    context
+    |> setup_digest()
+    |> setup_newsie()
+  end
 
   def setup_digest_project(%{project: %{id: project_id}, digest: %{id: digest_id}} = context) do
     digest_project =
