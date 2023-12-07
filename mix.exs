@@ -123,7 +123,10 @@ defmodule Avance.MixProject do
       {:oban, "~> 2.15"},
       {:crontab, "~> 1.1"},
       {:tzdata, "~> 1.1"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+
+      # slack
+      {:slack_elixir, git: "https://github.com/mustela/slack_elixir", branch: "main"}
     ] ++
       private_deps()
   end

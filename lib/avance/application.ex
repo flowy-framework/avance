@@ -46,7 +46,8 @@ defmodule Avance.Application do
       # {Avance.Worker, arg},
       # Start to serve requests, typically the last entry
       AvanceWeb.Endpoint,
-      {Avance.Core.Servers.ReminderServer, []}
+      {Avance.Core.Servers.ReminderServer, []},
+      {Slack.Supervisor, Application.get_env(:avance, Avance.Core.Bots.SlackBot)}
     ]
   end
 

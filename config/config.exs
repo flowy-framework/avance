@@ -9,7 +9,7 @@ import Config
 
 config :avance,
   ecto_repos: [Avance.Repo],
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime, api_prefix: "/api"]
 
 # Configures the endpoint
 config :avance, AvanceWeb.Endpoint,
