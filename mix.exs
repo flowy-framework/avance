@@ -158,7 +158,7 @@ defmodule Avance.MixProject do
 
   def flowy_dep(false) do
     [
-      {:flowy, git: "https://github.com/flowy-framework/flowy", tag: "0.1.1"}
+      {:flowy, git: "https://github.com/flowy-framework/flowy", tag: "0.1.8"}
     ]
   end
 
