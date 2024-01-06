@@ -164,3 +164,8 @@ config :avance, Flowy.Prometheus,
     folder_name: "Flowy App Dashboards",
     annotate_app_lifecycle: true
   ]
+
+config :ueberauth, Ueberauth.Strategy.Okta.OAuth,
+  site: System.get_env("OKTA_SITE"),
+  client_id: System.get_env("OKTA_CLIENT_ID"),
+  client_secret: System.get_env("OKTA_CLIENT_SECRET")

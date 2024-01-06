@@ -46,9 +46,11 @@ defmodule Avance.Queries.ProjectQueryTest do
     end
   end
 
+  setup [:setup_account]
+
   @tag :project_query
-  test "create project" do
-    valid_attrs = %{name: "some name", description: "some description"}
+  test "create project", %{account: %{id: account_id}} do
+    valid_attrs = %{name: "some name", description: "some description", account_id: account_id}
 
     assert {:ok, %Project{} = project} = ProjectQuery.create(valid_attrs)
     assert project.name == "some name"

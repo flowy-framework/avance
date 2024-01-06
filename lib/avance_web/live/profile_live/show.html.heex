@@ -1,0 +1,37 @@
+<.breadcrumb title="Your Profile" steps={@steps}>
+  <:actions>
+    <.action_link
+      :if={@show_dev_token}
+      type={:patch}
+      path={~p"/profile/dev-token"}
+      tooltip="Dev token"
+      custom_icon="fa-regular fa-eye"
+    />
+  </:actions>
+</.breadcrumb>
+
+<div class="grid-rows-2">
+  <div class="grid grid-cols-4 gap-4">
+    <.card title="Details">
+      <.card_field label="Name" value={User.full_name(@current_user) || "n/a"} />
+      <.card_field label="Email" value={@current_user.email} />
+    </.card>
+  </div>
+</div>
+
+<.modal
+  :if={@live_action == :token}
+  title={@page_title}
+  id="token-modal"
+  show
+  width={:medium}
+  on_cancel={JS.patch(~p"/profile")}
+>
+  <.live_component
+    module={AvanceWeb.ProfileLive.TokenComponent}
+    id="token-component"
+    title={@page_title}
+    action={@live_action}
+    patch={~p"/profile/dev-token"}
+  />
+</.modal>

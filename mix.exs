@@ -66,6 +66,7 @@ defmodule Avance.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.7.10"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
@@ -126,7 +127,11 @@ defmodule Avance.MixProject do
       {:timex, "~> 3.0"},
 
       # slack
-      {:slack_elixir, "~> 1.1.0"}
+      {:slack_elixir, "~> 1.1.0"},
+
+      # OAuth
+      {:ueberauth, "~> 0.10.7"},
+      {:ueberauth_okta, "~> 1.0"}
     ] ++
       private_deps()
   end
