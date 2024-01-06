@@ -1,4 +1,7 @@
 defmodule Avance.Core.Bots.SlackBot do
+  @moduledoc """
+  A simple Slack bot that responds to messages.
+  """
   use Slack.Bot
 
   require Logger

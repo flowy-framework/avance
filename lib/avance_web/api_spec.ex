@@ -1,4 +1,7 @@
 defmodule AvanceWeb.ApiSpec do
+  @moduledoc """
+  This module is used to generate the OpenAPI specification for the API.
+  """
   alias OpenApiSpex.{Components, Info, OpenApi, Paths, Server, Schema, MediaType, Response}
   alias AvanceWeb.{Endpoint, Router}
   @behaviour OpenApi
