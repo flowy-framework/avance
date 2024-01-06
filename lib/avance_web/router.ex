@@ -15,6 +15,25 @@ defmodule AvanceWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :api_spec do
+    plug OpenApiSpex.Plug.PutApiSpec, module: AvanceWeb.ApiSpec
+  end
+
+  scope "/api" do
+    pipe_through [:api, :api_spec]
+    get "/specs", OpenApiSpex.Plug.RenderSpec, []
+  end
+
+  scope "/api/i1", AvanceWeb.Controllers.Api do
+    pipe_through([:api])
+  end
+
+  scope "/" do
+    # TODO: Make sure you want to have this open in production
+    pipe_through([:browser])
+    get "/swaggerui", OpenApiSpex.Plug.SwaggerUI, path: "/api/specs"
+  end
+
   scope "/", AvanceWeb do
     pipe_through :browser
 

@@ -9,14 +9,14 @@ import Config
 
 config :avance,
   ecto_repos: [Avance.Repo],
-  generators: [timestamp_type: :utc_datetime]
+  generators: [timestamp_type: :utc_datetime, api_prefix: "/api"]
 
 # Configures the endpoint
 config :avance, AvanceWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
-    formats: [html: Flowy.Web.ErrorHTML, json: Flowy.Web.ErrorJSON],
+    formats: [html: Flowy.Web.Controllers.ErrorHTML, json: Flowy.Web.Controllers.ErrorJSON],
     layout: false
   ],
   pubsub_server: Avance.PubSub,

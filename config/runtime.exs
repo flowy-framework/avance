@@ -20,6 +20,16 @@ if System.get_env("PHX_SERVER") do
   config :avance, AvanceWeb.Endpoint, server: true
 end
 
+config :avance, Avance.Core.Bots.SlackBot,
+  app_token: System.get_env("SLACK_APP_TOKEN"),
+  bot_token: System.get_env("SLACK_BOT_TOKEN"),
+  bot: Avance.Core.Bots.SlackBot,
+  # Add this if you want to customize the channel types to join.
+  # By default we join all channel types: public_channel, private_channel, im, mpim.
+  channels: [
+    types: ["public_channel", "im", "private_channel"]
+  ]
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

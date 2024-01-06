@@ -123,7 +123,10 @@ defmodule Avance.MixProject do
       {:oban, "~> 2.15"},
       {:crontab, "~> 1.1"},
       {:tzdata, "~> 1.1"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+
+      # slack
+      {:slack_elixir, "~> 1.1.0"}
     ] ++
       private_deps()
   end
@@ -155,7 +158,7 @@ defmodule Avance.MixProject do
 
   def flowy_dep(false) do
     [
-      {:flowy, git: "https://github.com/flowy-framework/flowy", tag: "0.1.1"}
+      {:flowy, git: "https://github.com/flowy-framework/flowy", tag: "0.1.8"}
     ]
   end
 
