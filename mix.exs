@@ -126,7 +126,7 @@ defmodule Avance.MixProject do
       {:timex, "~> 3.0"},
 
       # slack
-      {:slack_elixir, git: "https://github.com/mustela/slack_elixir", branch: "main"}
+      {:slack_elixir, "~> 1.1.0"}
     ] ++
       private_deps()
   end
