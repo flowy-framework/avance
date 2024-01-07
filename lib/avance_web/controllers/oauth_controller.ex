@@ -43,9 +43,6 @@ defmodule AvanceWeb.Controllers.OAuthController do
     end
   end
 
-  @doc """
-  Callback action for OAuth.
-  """
   def callback(conn, %{"error_description" => error}) do
     conn
     |> put_flash(:error, "Authentication failed: #{error}")
