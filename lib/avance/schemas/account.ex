@@ -1,34 +1,30 @@
-defmodule Avance.Schemas.Project do
+defmodule Avance.Schemas.Account do
   @moduledoc """
-  This schema represents a project.
+  The schema for the accounts table.
   """
-
   use Ecto.Schema
   import Ecto.Changeset
 
   @type t :: %__MODULE__{
           id: binary(),
-          name: String.t(),
-          description: String.t(),
           inserted_at: DateTime.t(),
           updated_at: DateTime.t()
         }
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
-  schema "projects" do
+  @derive {Phoenix.Param, key: :id}
+  schema "accounts" do
     field :name, :string
-    field :description, :string
+    field :logo, :string
 
-    belongs_to :account, Avance.Schemas.Account
-
-    has_many :reminders, Avance.Schemas.Reminder
-    has_many :entries, Avance.Schemas.Entry
+    belongs_to :owner, Avance.Schemas.User
+    has_many :projects, Avance.Schemas.Project
 
     timestamps(type: :utc_datetime)
   end
 
-  @required_fields [:name, :description, :account_id]
+  @required_fields [:name, :logo, :owner_id]
   @optional_fields []
 
   @doc """
@@ -40,8 +36,9 @@ defmodule Avance.Schemas.Project do
   end
 
   @doc false
-  def changeset(project, attrs) do
-    project
+  @spec changeset(Avance.Schemas.Account.t(), map()) :: Ecto.Changeset.t()
+  def changeset(account, attrs) do
+    account
     |> cast(attrs, @required_fields ++ @optional_fields)
     |> validate_required(@required_fields)
   end

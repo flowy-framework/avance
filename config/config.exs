@@ -72,6 +72,17 @@ config :flowy, :oauth,
 
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
+config :ueberauth, Ueberauth,
+  base_path: "/oauth",
+  providers: [
+    okta: {
+      Ueberauth.Strategy.Okta,
+      [
+        oauth2_params: [scope: "openid email profile groups", audience: "api://default"]
+      ]
+    }
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

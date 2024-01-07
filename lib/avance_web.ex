@@ -91,6 +91,7 @@ defmodule AvanceWeb do
       use Paleta
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
+      alias Paleta.Components.Breadcrumb.Step
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

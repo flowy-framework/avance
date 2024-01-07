@@ -42,9 +42,11 @@ defmodule Avance.Core.ProjectsTest do
     end
   end
 
+  setup [:setup_account]
+
   @tag :core_projects
-  test "create project" do
-    valid_attrs = %{name: "some name", description: "some description"}
+  test "create project", %{account: %{id: account_id}} do
+    valid_attrs = %{name: "some name", description: "some description", account_id: account_id}
 
     assert {:ok, %Project{} = project} = Projects.create(valid_attrs)
     assert project.name == "some name"

@@ -6,8 +6,23 @@ defmodule Avance.Test.Setups do
     EntryFixtures,
     DigestFixtures,
     DigestProjectFixtures,
-    NewsieFixtures
+    NewsieFixtures,
+    AccountFixtures,
+    UserFixtures
   }
+
+  def setup_account(%{user: user} = context) do
+    account = AccountFixtures.account_fixture(%{owner_id: user.id})
+
+    context
+    |> add_to_context(%{account: account})
+  end
+
+  def setup_account(context) do
+    context
+    |> setup_user()
+    |> setup_account()
+  end
 
   def setup_newsie(%{digest: %{id: digest_id}} = context) do
     newsie = NewsieFixtures.newsie_fixture(%{digest_id: digest_id})
@@ -78,11 +93,24 @@ defmodule Avance.Test.Setups do
     |> add_to_context(%{project: project})
   end
 
-  def setup_project(context) do
-    project = ProjectFixtures.project_fixture()
+  def setup_project(%{account: account} = context) do
+    project = ProjectFixtures.project_fixture(%{account_id: account.id})
 
     context
     |> add_to_context(%{project: project})
+  end
+
+  def setup_project(context) do
+    context
+    |> setup_account()
+    |> setup_project()
+  end
+
+  def setup_user(context) do
+    user = UserFixtures.user_fixture()
+
+    context
+    |> add_to_context(%{user: user})
   end
 
   defp add_to_context(context, attrs) do

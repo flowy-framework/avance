@@ -2,6 +2,8 @@ defmodule AvanceWeb.Router do
   @moduledoc false
   use AvanceWeb, :router
 
+  import AvanceWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -9,10 +11,19 @@ defmodule AvanceWeb.Router do
     plug :put_root_layout, html: {AvanceWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :unauthenticated_layout do
+    plug :put_root_layout, html: {AvanceWeb.Layouts, :unauthenticated}
+  end
+
+  pipeline :auth do
+    plug(Ueberauth)
   end
 
   pipeline :api_spec do
@@ -35,15 +46,42 @@ defmodule AvanceWeb.Router do
   end
 
   scope "/", AvanceWeb do
-    pipe_through :browser
+    pipe_through([:browser, :unauthenticated_layout, :redirect_if_user_is_authenticated])
 
-    live("/", Live.HomeLive, :show)
+    get("/sign-in", Controllers.SignInController, :new)
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", AvanceWeb do
-  #   pipe_through :api
-  # end
+  ## OAuth routes
+  scope "/oauth", AvanceWeb do
+    pipe_through([:browser, :auth])
+    get("/:provider", Controllers.OAuthController, :request)
+    get("/:provider/callback", Controllers.OAuthController, :callback)
+  end
+
+  scope "/", AvanceWeb do
+    pipe_through :browser
+
+    live_session :authenticated, on_mount: [{AvanceWeb.UserAuth, :ensure_authenticated}] do
+      live("/", Live.HomeLive, :show)
+    end
+  end
+
+  scope "/", AvanceWeb do
+    pipe_through [:browser]
+
+    delete "/users/log-out", UserSessionController, :delete
+  end
+
+  ## Authentication routes
+  scope "/", AvanceWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :require_authenticated_user,
+      on_mount: [{AvanceWeb.UserAuth, :ensure_authenticated}] do
+      live "/profile", ProfileLive.Show, :show
+      live "/profile/dev-token", ProfileLive.Show, :token
+    end
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:avance, :dev_routes) do

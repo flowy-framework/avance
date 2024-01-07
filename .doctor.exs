@@ -1,5 +1,5 @@
 %Doctor.Config{
-  ignore_modules: [AvanceWeb, Avance.Test.Setups],
+  ignore_modules: [AvanceWeb, Avance.Test.Setups, Avance.Tests.Fixtures],
   ignore_paths: [],
   min_module_doc_coverage: 40,
   min_module_spec_coverage: 0,
