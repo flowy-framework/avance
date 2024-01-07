@@ -1,4 +1,7 @@
 defmodule AvanceWeb.ProfileLive.Show do
+  @moduledoc """
+  The profile live view.
+  """
   use AvanceWeb, :live_view
 
   alias Avance.Schemas.User

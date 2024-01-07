@@ -1,6 +1,19 @@
 defmodule Avance.Schemas.User do
+  @moduledoc """
+  The schema for the users table.
+  """
   use Ecto.Schema
   import Ecto.Changeset
+
+  @type t :: %__MODULE__{
+          id: binary(),
+          email: String.t(),
+          avatar_url: String.t(),
+          first_name: String.t(),
+          last_name: String.t(),
+          inserted_at: DateTime.t(),
+          updated_at: DateTime.t()
+        }
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -54,10 +67,18 @@ defmodule Avance.Schemas.User do
     end
   end
 
+  @doc """
+  Returns the default avatar URL for the given user.
+  """
+  @spec default_avatar_url(Avance.Schemas.User.t()) :: String.t()
   def default_avatar_url(%__MODULE__{avatar_url: avatar_url}) do
     avatar_url || "/images/default-user-avatar.png"
   end
 
+  @doc """
+  Returns the full name of the given user.
+  """
+  @spec full_name(Avance.Schemas.User.t()) :: nil | String.t()
   def full_name(%{first_name: "", last_name: ""}), do: nil
   def full_name(%{first_name: nil, last_name: nil}), do: nil
 

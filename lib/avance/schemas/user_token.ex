@@ -1,7 +1,19 @@
 defmodule Avance.Schemas.UserToken do
+  @moduledoc """
+  The schema for the users_tokens table.
+  """
   use Ecto.Schema
   import Ecto.Query
   alias Avance.Schemas.UserToken
+
+  @type t :: %__MODULE__{
+          id: binary(),
+          token: binary(),
+          context: String.t(),
+          sent_to: String.t(),
+          user_id: binary(),
+          inserted_at: DateTime.t()
+        }
 
   @hash_algorithm :sha256
   @rand_size 32

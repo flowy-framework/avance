@@ -1,10 +1,16 @@
 defmodule AvanceWeb.Controllers.OAuthController do
+  @moduledoc """
+  The OAuth controller.
+  """
   use AvanceWeb, :controller
   plug(Ueberauth)
 
   alias Avance.Core.Users
   alias AvanceWeb.UserAuth
 
+  @doc """
+  Callback action for OAuth.
+  """
   def callback(
         %{
           assigns: %{
@@ -37,6 +43,9 @@ defmodule AvanceWeb.Controllers.OAuthController do
     end
   end
 
+  @doc """
+  Callback action for OAuth.
+  """
   def callback(conn, %{"error_description" => error}) do
     conn
     |> put_flash(:error, "Authentication failed: #{error}")

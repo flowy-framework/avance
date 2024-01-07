@@ -1,4 +1,7 @@
 defmodule Avance.Schemas.Account do
+  @moduledoc """
+  The schema for the accounts table.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

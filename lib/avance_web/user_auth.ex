@@ -1,4 +1,7 @@
 defmodule AvanceWeb.UserAuth do
+  @moduledoc """
+  User authentication helpers.
+  """
   use AvanceWeb, :verified_routes
 
   import Plug.Conn

@@ -1,4 +1,7 @@
 defmodule AvanceWeb.ProfileLive.TokenComponent do
+  @moduledoc """
+  The token component.
+  """
   use AvanceWeb, :live_component
 
   attr(:error, :string, default: nil)
